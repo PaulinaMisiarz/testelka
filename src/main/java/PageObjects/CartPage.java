@@ -13,10 +13,15 @@ public class CartPage {
         this.driver = driver;
     }
 
-    public Integer getProductAmount(String productId) {
+    public int getProductAmount(String productId) {
         wait = new WebDriverWait(driver, 7);
         wait.until(ExpectedConditions.presenceOfElementLocated(shopTable));
         By removeProductButton = By.cssSelector("a[data-product_id='" + productId + "']");
         return driver.findElements(removeProductButton).size();
+    }
+
+    public int getProductQty() {
+        String quantityString = driver.findElement(By.cssSelector("div.quantity>input")).getAttribute("value");
+        return Integer.parseInt(quantityString);
     }
 }

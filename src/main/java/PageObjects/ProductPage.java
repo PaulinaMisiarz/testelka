@@ -36,4 +36,13 @@ public class ProductPage {
         wait.until(ExpectedConditions.elementToBeClickable(viewCartButton)).click();
         return new CartPage(driver);
     }
+
+    public ProductPage addToCartWithQty(int quantity) {
+        WebElement quantityField = driver.findElement(By.cssSelector("input.qty"));
+        quantityField.clear();
+        quantityField.sendKeys(String.valueOf(quantity));
+        addToCart();
+        return new ProductPage(driver);
+
+    }
 }
