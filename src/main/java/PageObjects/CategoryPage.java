@@ -1,20 +1,20 @@
-package TestyPOM;
+package PageObjects;
 
-import PageObjects.CartPage;
-import PageObjects.ProductPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class CategoryPage {
+public class CategoryPage extends BasePage {
+    private WebDriverWait wait;
 
-    private WebDriver driver;
     public CategoryPage(WebDriver driver) {
-        this.driver = driver;
-
+        super(driver);
+        wait = new WebDriverWait(driver, 5);
     }
+
+    private  By viewCartButtonLocator = By.cssSelector(".added_to_cart");
+    private String addToCartButtonCssSelector = ".post-<productId>>.add_to_cart_button";
 
     public CategoryPage goTo(String url) {
         driver.navigate().to(url);
@@ -22,18 +22,15 @@ public class CategoryPage {
     }
 
     public CategoryPage addToCart(String productId) {
-        By addToCartButton = By.cssSelector(".post-"+productId+">.add_to_cart_button");
+        By addToCartButton = By.cssSelector(addToCartButtonCssSelector.replace("<productId>", productId));
         driver.findElement(addToCartButton).click();
-        WebDriverWait wait = new WebDriverWait(driver, 5);
         wait.until(ExpectedConditions.attributeContains(addToCartButton, "class", "added"));
         return new CategoryPage(driver);
 
     }
 
     public CartPage viewCart() {
-        By viewCartButton = By.cssSelector(".added_to_cart");
-        WebDriverWait wait = new WebDriverWait(driver, 5);
-        wait.until(ExpectedConditions.elementToBeClickable(viewCartButton)).click();
+        wait.until(ExpectedConditions.elementToBeClickable(viewCartButtonLocator)).click();
         return new CartPage(driver);
     }
 }
