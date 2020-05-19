@@ -7,9 +7,11 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class CategoryPage extends BasePage {
     private WebDriverWait wait;
+    public FooterPage footer;
 
     public CategoryPage(WebDriver driver) {
         super(driver);
+        footer = new FooterPage(driver);
         wait = new WebDriverWait(driver, 5);
     }
 

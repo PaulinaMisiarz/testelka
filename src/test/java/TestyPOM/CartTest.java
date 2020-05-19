@@ -21,9 +21,9 @@ public class CartTest extends BaseTest {
 
     @Test
     public void addToCartFromProductPageTest(){
-    ProductPage productPage = new ProductPage(driver).goTo(productUrl);
-    productPage.closeDemoNotice();
-    boolean isProductInCart = productPage.addToCart().viewCart().isProductInCart(productId);
+    ProductPage productPage = new ProductPage(driver);
+    productPage.footer.closeDemoNotice();
+    boolean isProductInCart = productPage.goTo(productUrl).addToCart().viewCart().isProductInCart(productId);
 
     assertTrue(isProductInCart,
                 "Remove button was not found for a product with " + productId + " (Egipt - El Gouna). " +
@@ -33,18 +33,18 @@ public class CartTest extends BaseTest {
     @Test
     public void addToCartFromCategoryPageTest(){
         CategoryPage categoryPage = new CategoryPage(driver).goTo(categoryUrl);
-        categoryPage.closeDemoNotice();
+        categoryPage.footer.closeDemoNotice();
         boolean isProductInCart  = categoryPage.addToCart(productId).viewCart().isProductInCart(productId);
 
         assertTrue(isProductInCart,
                 "Remove button was not found for a product with" + productId + " (Egipt - El Gouna). " +
                         "Was the product added to cart?");
-
     }
+
     @Test
     public void addOneProductTenTimesTest(){
         ProductPage productPage = new ProductPage(driver).goTo(productUrl);
-        productPage.closeDemoNotice();
+        productPage.footer.closeDemoNotice();
         int productQty = productPage.addToCartWithQty(10).viewCart().getProductQty();
 
         assertEquals(10, productQty,
